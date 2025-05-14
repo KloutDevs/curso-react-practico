@@ -36,7 +36,7 @@ export const ShoppingCartProvider = ({children}) => {
   const [searchByCategory, setSearchByCategory] = useState(null)
 
   useEffect(() => {
-    fetch('https://api.escuelajs.co/api/v1/products')
+    fetch('https://fakestoreapi.com/products')
       .then(response => response.json())
       .then(data => setItems(data))
   }, [])
@@ -46,7 +46,7 @@ export const ShoppingCartProvider = ({children}) => {
   }
 
   const filteredItemsByCategory = (items, searchByCategory) => {
-    return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
+    return items?.filter(item => item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
   }
 
   const filterBy = (searchType, items, searchByTitle, searchByCategory) => {
