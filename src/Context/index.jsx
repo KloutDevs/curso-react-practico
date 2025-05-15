@@ -147,15 +147,18 @@ export const AuthenticationProvider = ({ children }) => {
   const [isSignOutData, setIsSignOutData] = useState(isSignOut);
 
   const handleSignOut = () => {
-    if (isSignOutData) return;
+    if (isSignOutData === true) return;
     setIsSignOutData(true);
-    localStorage.setItem('sign-out', JSON.stringify(isSignOutData));
+    setAccountData({});
+    localStorage.setItem('sign-out', JSON.stringify(true));
+    localStorage.setItem('account', JSON.stringify({}));
   };
 
   const handleLogin = (email, password) => {
     if (!isSignOutData) return;
     if(email !== 'user@example.com' || password !== '123456') return 'Invalid credentials';
     setIsSignOutData(false);
+    setAccountData({ name: 'Usuario 1', lastName: 'Platzi', email, password });
     localStorage.setItem('sign-out', JSON.stringify(false));
     localStorage.setItem('account', JSON.stringify({ name: 'Usuario 1', lastName: 'Platzi', email, password }));
   };
@@ -171,7 +174,8 @@ export const AuthenticationProvider = ({ children }) => {
   return (
     <AuthenticationContext.Provider
       value={{
-        account,
+        accountData,
+        isSignOutData,
         setAccountData,
         handleSignOut,
         handleLogin,
