@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ShoppingBagIcon } from '@heroicons/react/24/solid';
+import { ShoppingBagIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { AuthenticationContext, ShoppingCartContext } from '../../Context';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cartContext = useContext(ShoppingCartContext);
   const authContext = useContext(AuthenticationContext);
   const activeStyle = 'underline underline-offset-4';
@@ -25,19 +26,29 @@ const Navbar = () => {
           </span>
         </li>
         <li>
-          <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+          <NavLink
+            onClick={() => setIsMenuOpen(false)}
+            to="/my-orders"
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             My Orders
           </NavLink>
         </li>
         <li>
-          <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+          <NavLink
+            onClick={() => setIsMenuOpen(false)}
+            to="/my-account"
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             My Account
           </NavLink>
         </li>
         <li>
           <NavLink
-            onClick={authContext.handleSignOut}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => {
+              setIsMenuOpen(false);
+              authContext.handleSignOut();
+            }}
           >
             Sign Out
           </NavLink>
@@ -46,74 +57,80 @@ const Navbar = () => {
     );
   };
 
+  const categories = [
+    { path: '/', name: 'All', category: null },
+    { path: '/clothes', name: 'Clothes', category: 'clothes' },
+    { path: '/electronics', name: 'Electronics', category: 'electronics' },
+    { path: '/furnitures', name: 'Furnitures', category: 'furnitures' },
+    { path: '/toys', name: 'Toys', category: 'toys' },
+    { path: '/others', name: 'Others', category: 'others' },
+  ];
+
   return (
-    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
-      <ul className="flex items-center gap-3">
-        <li className="font-semibold text-lg">
-          <NavLink to="/">Shopi</NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/"
-            onClick={() => cartContext.setSearchByCategory()}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            All
+    <nav className="bg-white fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
+      <div className="flex justify-between items-center">
+        {/* Logo y Botón de menú */}
+        <div className="flex items-center gap-4">
+          <NavLink to="/" className="font-semibold text-lg">
+            Shopi
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/clothes"
-            onClick={() => cartContext.setSearchByCategory('clothes')}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Clothes
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/electronics"
-            onClick={() => cartContext.setSearchByCategory('electronics')}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Electronics
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/furnitures"
-            onClick={() => cartContext.setSearchByCategory('furnitures')}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Furnitures
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/toys"
-            onClick={() => cartContext.setSearchByCategory('toys')}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Toys
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/others"
-            onClick={() => cartContext.setSearchByCategory('others')}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Others
-          </NavLink>
-        </li>
-      </ul>
-      <ul className="flex items-center gap-3">
-        {renderView()}
-        <li className="flex items-center">
-          <ShoppingBagIcon className="h-6 w-6 text-black"></ShoppingBagIcon>
-          <div>{cartContext.cartProducts.length}</div>
-        </li>
-      </ul>
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden">
+            {isMenuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Menú de categorías - Escritorio */}
+        <ul className="hidden md:flex items-center gap-3">
+          {categories.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                onClick={() => cartContext.setSearchByCategory(item.category)}
+                className={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                {item.name}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+
+        {/* Carrito y cuenta - Escritorio */}
+        <ul className="hidden md:flex items-center gap-3">
+          {renderView()}
+          <li className="flex items-center">
+            <ShoppingBagIcon className="h-6 w-6 text-black" />
+            <div>{cartContext.cartProducts.length}</div>
+          </li>
+        </ul>
+      </div>
+
+      {/* Menú móvil */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <ul className="flex flex-col gap-4 pt-4">
+            {categories.map((item) => (
+              <li key={item.path}>
+                <NavLink
+                  to={item.path}
+                  onClick={() => {
+                    cartContext.setSearchByCategory(item.category);
+                    setIsMenuOpen(false);
+                  }}
+                  className={({ isActive }) => (isActive ? activeStyle : undefined)}
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
+            <div className="border-t border-gray-200 my-2" />
+            {renderView()}
+            <li className="flex items-center">
+              <ShoppingBagIcon className="h-6 w-6 text-black" />
+              <div>{cartContext.cartProducts.length}</div>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };

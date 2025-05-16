@@ -156,7 +156,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const handleLogin = (email, password) => {
     if (!isSignOutData) return;
-    if(email !== 'user@example.com' || password !== '123456') return 'Invalid credentials';
+    if (email !== 'user@example.com' || password !== '123456') return 'Invalid credentials';
     setIsSignOutData(false);
     setAccountData({ name: 'Usuario 1', lastName: 'Platzi', email, password });
     localStorage.setItem('sign-out', JSON.stringify(false));
@@ -165,9 +165,16 @@ export const AuthenticationProvider = ({ children }) => {
 
   const handleSignUp = (name, lastName, email, password) => {
     if (!isSignOutData) return;
-    if(email == 'user@example.com') return 'User already exists';
+    if (email == 'user@example.com') return 'User already exists';
     setIsSignOutData(false);
+    setAccountData({ name, lastName, email, password });
     localStorage.setItem('sign-out', JSON.stringify(isSignOutData));
+    localStorage.setItem('account', JSON.stringify({ name, lastName, email, password }));
+  };
+
+  const handleUpdateAccount = (name, lastName, email, password) => {
+    if(isSignOutData == true) return;
+    setAccountData({ name, lastName, email, password });
     localStorage.setItem('account', JSON.stringify({ name, lastName, email, password }));
   };
 
@@ -179,7 +186,8 @@ export const AuthenticationProvider = ({ children }) => {
         setAccountData,
         handleSignOut,
         handleLogin,
-        handleSignUp
+        handleSignUp,
+        handleUpdateAccount
       }}
     >
       {children}

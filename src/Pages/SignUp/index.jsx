@@ -36,7 +36,7 @@ function SignUp() {
   return (
     <Layout>
       <div className="w-full h-[calc(100vh-50px)] flex items-center justify-center">
-        <form className="flex flex-col items-center justify-center bg-slate-50 shadow-xl p-20 border border-black rounded-2xl md">
+        <form className="flex flex-col items-center justify-center mt-[70px] p-5 md:p-20 rounded-2xl w-full max-w-md">
           <h1 className="font-medium text-xl">Sign In</h1>
           <div className="flex flex-col items-center justify-center mt-4">
             <input
@@ -44,37 +44,37 @@ function SignUp() {
               placeholder="Nombre"
               name='name'
               onKeyDown={handleKeyDown}
-              className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+              className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Apellido"
               name='lastName'
               onKeyDown={handleKeyDown}
-              className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+              className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Email"
               name='email'
               onKeyDown={handleKeyDown}
-              className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+              className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
             />
             <input
               type="password"
               placeholder="Contraseña"
               name='password'
               onKeyDown={handleKeyDown}
-              className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+              className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
             />
             <input
               type="password"
               placeholder="Confirma tu contraseña"
               name='confirmPassword'
               onKeyDown={handleKeyDown}
-              className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+              className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
             />
-            <button onClick={handleSignUp} className="rounded-lg bg-black text-white border border-black w-80 p-4 mb-4 focus:outline-none hover:bg-gray-900 transition-all duration-300">
+            <button onClick={handleSignUp} className="rounded-lg bg-black text-white border border-black w-full md:w-80 p-4 mb-4 focus:outline-none hover:bg-gray-900 transition-all duration-300">
               Registrarme
             </button>
             {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}

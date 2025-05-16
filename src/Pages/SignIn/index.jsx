@@ -33,11 +33,11 @@ function SignIn() {
         <form
           onSubmit={handleSignIn}
           ref={formRef}
-          className="flex flex-col items-center justify-center bg-slate-50 shadow-xl p-20 border border-black rounded-2xl"
+          className="flex flex-col items-center justify-center mt-[70px] p-5 md:p-20 rounded-2xl w-full max-w-md"
         >
           <h1 className="font-medium text-xl">Sign In</h1>
           <div className="flex flex-col items-center justify-center mt-4 gap-3">
-            <div className="flex flex-col items-start justify-center">
+            <div className="flex flex-col w-full items-start justify-center">
               <label htmlFor="emailSignIn" className="text-sm text-gray-500">
                 Correo electrónico
               </label>
@@ -47,10 +47,10 @@ function SignIn() {
                 placeholder="Email"
                 name="email"
                 onKeyDown={handleKeyDown}
-                className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+                className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
               />
             </div>
-            <div className="flex flex-col items-start justify-center">
+            <div className="flex flex-col w-full items-start justify-center">
               <label htmlFor="passwordSignIn" className="text-sm text-gray-500">
                 Contraseña
               </label>
@@ -60,12 +60,12 @@ function SignIn() {
                 placeholder="Contraseña"
                 name="password"
                 onKeyDown={handleKeyDown}
-                className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+                className="rounded-lg border border-black w-full md:w-80 p-4 mb-4 focus:outline-none"
               />
             </div>
             <button
               onClick={handleSignIn}
-              className="rounded-lg bg-black text-white border border-black w-80 p-4 mb-4 focus:outline-none hover:bg-gray-900 transition-all duration-300"
+              className="rounded-lg bg-black text-white border border-black w-full md:w-80 p-4 mb-4 focus:outline-none hover:bg-gray-900 transition-all duration-300"
             >
               Iniciar sesión
             </button>
